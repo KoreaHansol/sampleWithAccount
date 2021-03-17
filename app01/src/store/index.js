@@ -20,10 +20,10 @@ const store = new Vuex.Store({
             state.accountList = _.concat(state.accountList, _.merge(data, {seq: ++state.seq}))
         },
         updateAccountList(state, data) {
-            state.accountList.splice(_.findIndex(state.accountList, function(o) { return o.seq == data.seq; }), 1, data);
+            state.accountList.splice(_.findIndex(state.accountList, function(o) { return o.seq === data.seq; }), 1, data);
         },
-        deleteAccountList(state, data) {
-            state.accountList.splice(_.findIndex(state.accountList, function(o) { return o.seq == data.seq; }), 1);
+        deleteAccountList(state, seq) {
+            state.accountList.splice(_.findIndex(state.accountList, function(o) { return o.seq === seq; }), 1);
         }
     }
 })

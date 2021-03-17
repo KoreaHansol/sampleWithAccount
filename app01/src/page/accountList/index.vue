@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list">
     <button @click="decreaseMonth">left</button>
     <span>{{selectYear}}년 {{selectMonth}}월</span>
     <button @click="increaseMonth">right</button>
@@ -11,14 +11,16 @@
         <th>수정</th>
         <th>삭제</th>
         <tr v-for="item in getAccountList" :key="item.seq">
-            <td>{{ item.date}}</td>
-            <td>{{ item.content}}</td>
-            <td>{{ item.income}}</td>
-            <td>{{ item.expenditure}}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.content }}</td>
+            <td>{{ item.income }}</td>
+            <td>{{ item.expenditure }}</td>
             <td><button @click="LinkTo('AccountUpdate', item.seq)">수정</button></td>
             <td><button @click="deleteList(item.seq)">삭제</button></td>
         </tr>
     </table>
+    <span>합계: {{getAccountSum}}</span>
+    
   </div>
 </template>
 <script>
@@ -36,6 +38,15 @@ export default {
       return _.filter(_.sortBy(this.$store.state.accountList, 'date'), o => {
           return moment(o.date).month() + 1 === this.selectMonth && moment(o.date).year() === this.selectYear
       })
+    },
+    getAccountSum() {
+        const arr = []
+        _.forEach(this.getAccountList, v => {
+            arr.push(v.income - v.expenditure)
+        })
+        return _.reduce(arr, function(sum, n) {
+            return sum + n;
+        }, 0);
     }
   },
   data() {
@@ -62,4 +73,7 @@ export default {
 </script>
 
 <style scoped>
+.list {
+    text-align: -webkit-center;
+}
 </style>
