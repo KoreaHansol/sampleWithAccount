@@ -36,10 +36,9 @@ import { Datetime } from 'vue-datetime';
 import moment from 'moment'
 
 export default {
-  name: 'Update',
+  name: 'accountUpdate',
   data() {
     return {
-        params: this.$route.params,
         validationErrors: [],
         updateAccountObj: {
             date: "",
@@ -50,11 +49,11 @@ export default {
     }
   },
   mounted() {
-      this.updateAccountObj = _.find(this.$store.state.accountList, {'seq': this.$route.params.seq})
+      this.updateAccountObj = this.findObj
   },
   computed: {
       findObj() {
-          return _.find(this.$store.state.accountList, {'seq': this.$route.params.seq})
+          return _.find(this.$store.state.accountList, { 'seq': this.$route.params.seq })
       }
   },
   components: {
@@ -65,18 +64,18 @@ export default {
       return moment(date).format('YYYY-MM-DD')
     },
     checkForm() {
-      this.validationErrors = [];
+        this.validationErrors = [];
 
-      !this.updateAccountObj.date && this.validationErrors.push('날짜를 선택하세요.')
-      !this.updateAccountObj.content && this.validationErrors.push('내용을 입력하세요.')
-      !this.updateAccountObj.expenditure && this.validationErrors.push('지출을 입력하세요.')
-      !this.updateAccountObj.income && this.validationErrors.push('수입을 입력하세요.')
+        !this.updateAccountObj.date && this.validationErrors.push('날짜를 선택하세요.')
+        !this.updateAccountObj.content && this.validationErrors.push('내용을 입력하세요.')
+        !this.updateAccountObj.expenditure && this.validationErrors.push('지출을 입력하세요.')
+        !this.updateAccountObj.income && this.validationErrors.push('수입을 입력하세요.')
 
-      if(!this.validationErrors.length) {
-        this.updateAccountObj.date = this.parseDate(this.updateAccountObj.date)
-        this.$store.commit('updateAccountList', this.updateAccountObj)
-        this.$router.push({ name: 'AccountList'})
-      }
+        !this.validationErrors.length && (
+            this.updateAccountObj.date = this.parseDate(this.updateAccountObj.date),
+            this.$store.commit('updateAccountList', this.updateAccountObj),
+            this.$router.push({ name: 'AccountList', params: {date: this.updateAccountObj.date}})
+        )
     }
   },
 }

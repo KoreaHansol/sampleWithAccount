@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <button @click="decreaseMonth">left</button>
-    <span>{{selectYear}}년 {{selectMonth}}월</span>
+    <span>{{selectYear}}년 {{ selectMonth }}월</span>
     <button @click="increaseMonth">right</button>
     <table border="1">
         <th>날짜</th>
@@ -28,15 +28,11 @@ import _ from 'lodash'
 import moment from 'moment'
 
 export default {
-  name: 'List',
-  mounted() {
-  },
-  components: {
-  },
+  name: 'accountList',
   computed: {
     getAccountList() {
       return _.filter(_.sortBy(this.$store.state.accountList, 'date'), o => {
-          return moment(o.date).month() + 1 === this.selectMonth && moment(o.date).year() === this.selectYear
+          return moment(o.date).subtract(-1, 'months').month() === this.selectMonth && moment(o.date).year() === this.selectYear
       })
     },
     getAccountSum() {
@@ -51,8 +47,8 @@ export default {
   },
   data() {
     return {
-      selectMonth: moment().month() + 1,
-      selectYear: moment().year(),
+      selectMonth: this.$route.params ? moment(this.$route.params.date).subtract(-1, 'months').month() : moment().subtract(-1, 'months').month(),
+      selectYear: this.$route.params ? moment(this.$route.params.date).year() : moment().year()
     }
   },
   methods: {
