@@ -28,43 +28,43 @@ import _ from 'lodash'
 import moment from 'moment'
 
 export default {
-  name: 'accountList',
-  computed: {
-    getAccountList() {
-      return _.filter(_.sortBy(this.$store.state.accountList, 'date'), o => {
-          return moment(o.date).subtract(-1, 'months').month() === this.selectMonth && moment(o.date).year() === this.selectYear
-      })
-    },
-    getAccountSum() {
-        const arr = []
-        _.forEach(this.getAccountList, v => {
-            arr.push(v.income - v.expenditure)
+    name: 'accountList',
+    computed: {
+        getAccountList() {
+        return _.filter(_.sortBy(this.$store.state.accountList, 'date'), o => {
+            return moment(o.date).subtract(-1, 'months').month() === this.selectMonth && moment(o.date).year() === this.selectYear
         })
-        return _.reduce(arr, function(sum, n) {
-            return sum + n;
-        }, 0);
-    }
-  },
-  data() {
-    return {
-      selectMonth: this.$route.params ? moment(this.$route.params.date).subtract(-1, 'months').month() : moment().subtract(-1, 'months').month(),
-      selectYear: this.$route.params ? moment(this.$route.params.date).year() : moment().year()
-    }
-  },
-  methods: {
-    deleteList(seq) {
-        this.$store.commit('deleteAccountList', seq)
+        },
+        getAccountSum() {
+            const arr = []
+            _.forEach(this.getAccountList, v => {
+                arr.push(v.income - v.expenditure)
+            })
+            return _.reduce(arr, function(sum, n) {
+                return sum + n;
+            }, 0);
+        }
     },
-    LinkTo(link, seq) {
-        this.$router.push({name: link, params: {seq: seq}})
+    data() {
+        return {
+        selectMonth: this.$route.params ? moment(this.$route.params.date).subtract(-1, 'months').month() : moment().subtract(-1, 'months').month(),
+        selectYear: this.$route.params ? moment(this.$route.params.date).year() : moment().year()
+        }
     },
-    increaseMonth() {
-        this.selectMonth < 12 ? this.selectMonth++ : (this.selectYear++, this.selectMonth = 1)
-    },
-    decreaseMonth() {
-        this.selectMonth > 1 ? this.selectMonth-- : (this.selectYear--, this.selectMonth = 12)
+    methods: {
+        deleteList(seq) {
+            this.$store.commit('deleteAccountList', seq)
+        },
+        LinkTo(link, seq) {
+            this.$router.push({name: link, params: {seq: seq}})
+        },
+        increaseMonth() {
+            this.selectMonth < 12 ? this.selectMonth++ : (this.selectYear++, this.selectMonth = 1)
+        },
+        decreaseMonth() {
+            this.selectMonth > 1 ? this.selectMonth-- : (this.selectYear--, this.selectMonth = 12)
+        }
     }
-  }
 }
 </script>
 

@@ -36,47 +36,47 @@ import { Datetime } from 'vue-datetime';
 import moment from 'moment'
 
 export default {
-  name: 'accountUpdate',
-  data() {
-    return {
-        validationErrors: [],
-        updateAccountObj: {
-            date: "",
-            content: "",
-            expenditure: null,
-            income: null,
+    name: 'accountUpdate',
+    data() {
+        return {
+            validationErrors: [],
+            updateAccountObj: {
+                date: "",
+                content: "",
+                expenditure: null,
+                income: null,
+            }
         }
-    }
-  },
-  mounted() {
-      this.updateAccountObj = this.findObj
-  },
-  computed: {
-      findObj() {
-          return _.find(this.$store.state.accountList, { 'seq': this.$route.params.seq })
-      }
-  },
-  components: {
-    datetime: Datetime
-  },
-  methods: {
-    parseDate(date) {
-      return moment(date).format('YYYY-MM-DD')
     },
-    checkForm() {
-        this.validationErrors = [];
+    mounted() {
+        this.updateAccountObj = this.findObj
+    },
+    computed: {
+        findObj() {
+            return _.find(this.$store.state.accountList, { 'seq': this.$route.params.seq })
+        }
+    },
+    components: {
+        datetime: Datetime
+    },
+    methods: {
+        parseDate(date) {
+        return moment(date).format('YYYY-MM-DD')
+        },
+        checkForm() {
+            this.validationErrors = [];
 
-        !this.updateAccountObj.date && this.validationErrors.push('날짜를 선택하세요.')
-        !this.updateAccountObj.content && this.validationErrors.push('내용을 입력하세요.')
-        !this.updateAccountObj.expenditure && this.validationErrors.push('지출을 입력하세요.')
-        !this.updateAccountObj.income && this.validationErrors.push('수입을 입력하세요.')
+            !this.updateAccountObj.date && this.validationErrors.push('날짜를 선택하세요.')
+            !this.updateAccountObj.content && this.validationErrors.push('내용을 입력하세요.')
+            !this.updateAccountObj.expenditure && this.validationErrors.push('지출을 입력하세요.')
+            !this.updateAccountObj.income && this.validationErrors.push('수입을 입력하세요.')
 
-        !this.validationErrors.length && (
-            this.updateAccountObj.date = this.parseDate(this.updateAccountObj.date),
-            this.$store.commit('updateAccountList', this.updateAccountObj),
-            this.$router.push({ name: 'AccountList', params: {date: this.updateAccountObj.date}})
-        )
-    }
+            !this.validationErrors.length && (
+                this.updateAccountObj.date = this.parseDate(this.updateAccountObj.date),
+                this.$store.commit('updateAccountList', this.updateAccountObj),
+                this.$router.push({ name: 'AccountList', params: {date: this.updateAccountObj.date}})
+            )
+        }
   },
 }
 </script>

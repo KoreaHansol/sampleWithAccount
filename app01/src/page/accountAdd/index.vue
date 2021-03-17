@@ -37,40 +37,40 @@ import { Datetime } from 'vue-datetime';
 import moment from 'moment'
 
 export default {
-  name: 'accountAdd',
-  data() {
-    return {
-      validationErrors: [],
-      addAccountObj: {
-        date: "",
-        content: "",
-        expenditure: null,
-        income: null,
-      }
-    }
-  },
-  components: {
-    datetime: Datetime
-  },
-  methods: {
-    parseDate(date) {
-      return moment(date).format('YYYY-MM-DD')
+    name: 'accountAdd',
+    data() {
+        return {
+        validationErrors: [],
+        addAccountObj: {
+            date: "",
+            content: "",
+            expenditure: null,
+            income: null,
+        }
+        }
     },
-    checkForm() {
-        this.validationErrors = [];
+    components: {
+        datetime: Datetime
+    },
+    methods: {
+        parseDate(date) {
+        return moment(date).format('YYYY-MM-DD')
+        },
+        checkForm() {
+            this.validationErrors = [];
 
-        !this.addAccountObj.date && this.validationErrors.push('날짜를 선택하세요.')
-        !this.addAccountObj.content && this.validationErrors.push('내용을 입력하세요.')
-        !this.addAccountObj.expenditure && this.validationErrors.push('지출을 입력하세요.')
-        !this.addAccountObj.income && this.validationErrors.push('수입을 입력하세요.')
+            !this.addAccountObj.date && this.validationErrors.push('날짜를 선택하세요.')
+            !this.addAccountObj.content && this.validationErrors.push('내용을 입력하세요.')
+            !this.addAccountObj.expenditure && this.validationErrors.push('지출을 입력하세요.')
+            !this.addAccountObj.income && this.validationErrors.push('수입을 입력하세요.')
 
-        !this.validationErrors.length && (
-            this.addAccountObj.date = this.parseDate(this.addAccountObj.date),
-            this.$store.commit('addAccountList', this.addAccountObj),
-            this.$router.push({ name: 'AccountList', params: {date: this.addAccountObj.date}})
-        )
-    }
-  },
+            !this.validationErrors.length && (
+                this.addAccountObj.date = this.parseDate(this.addAccountObj.date),
+                this.$store.commit('addAccountList', this.addAccountObj),
+                this.$router.push({ name: 'AccountList', params: {date: this.addAccountObj.date}})
+            )
+        }
+    },
 }
 </script>
 
