@@ -31,9 +31,9 @@ export default {
     name: 'accountList',
     computed: {
         getAccountList() {
-        return _.filter(_.sortBy(this.$store.state.accountList, 'date'), o => {
-            return moment(o.date).subtract(-1, 'months').month() === this.selectMonth && moment(o.date).year() === this.selectYear
-        })
+            return _.filter(_.sortBy(this.$store.state.accountList, 'date'), o => {
+                return moment(o.date).subtract(-1, 'months').month() === this.selectMonth && moment(o.date).year() === this.selectYear
+            })
         },
         getAccountSum() {
             const arr = []
@@ -47,8 +47,8 @@ export default {
     },
     data() {
         return {
-        selectMonth: this.$route.params ? moment(this.$route.params.date).subtract(-1, 'months').month() : moment().subtract(-1, 'months').month(),
-        selectYear: this.$route.params ? moment(this.$route.params.date).year() : moment().year()
+            selectMonth: this.$route.params ? moment(this.$route.params.date).subtract(-1, 'months').month() : moment().subtract(-1, 'months').month(),
+            selectYear: this.$route.params ? moment(this.$route.params.date).year() : moment().year()
         }
     },
     methods: {

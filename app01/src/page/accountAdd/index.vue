@@ -40,13 +40,13 @@ export default {
     name: 'accountAdd',
     data() {
         return {
-        validationErrors: [],
-        addAccountObj: {
-            date: "",
-            content: "",
-            expenditure: null,
-            income: null,
-        }
+            validationErrors: [],
+            addAccountObj: {
+                date: "",
+                content: "",
+                expenditure: null,
+                income: null,
+            }
         }
     },
     components: {
@@ -54,7 +54,7 @@ export default {
     },
     methods: {
         parseDate(date) {
-        return moment(date).format('YYYY-MM-DD')
+            return moment(date).format('YYYY-MM-DD')
         },
         checkForm() {
             this.validationErrors = [];
